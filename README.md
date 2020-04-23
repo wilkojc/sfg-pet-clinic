@@ -1,2 +1,2 @@
 # sfg-pet-clinic
-Developing an app in as port of Spring Guru course.
+Developing an app as part of Spring Guru course.
