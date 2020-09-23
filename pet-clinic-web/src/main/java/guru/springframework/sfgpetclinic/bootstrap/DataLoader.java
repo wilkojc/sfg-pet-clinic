@@ -15,12 +15,15 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialtyService specialtyService;
+    private final VisitService visitService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService, PetService petService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
+                      SpecialtyService specialtyService, PetService petService, VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialtyService = specialtyService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -65,16 +68,25 @@ public class DataLoader implements CommandLineRunner {
         owner2.setCity("Plock");
         owner2.setTelephone("987123645");
 
-        Pet owner2Pet = new Pet();
-        owner2Pet.setName("Fiona");
-        owner2Pet.setPetType(cat);
-        owner2Pet.setBirthDate(LocalDate.now());
-        owner2Pet.setOwner(owner2);
-        owner2.getPets().add(owner2Pet);
+        Pet jansPet = new Pet();
+        jansPet.setName("Fiona");
+        jansPet.setPetType(cat);
+        jansPet.setBirthDate(LocalDate.now());
+        jansPet.setOwner(owner2);
+        owner2.getPets().add(jansPet);
 
         ownerService.save(owner2);
 
         System.out.println("Loaded owners.");
+
+        Visit catVisit = new Visit();
+        catVisit.setPet(jansPet);
+        catVisit.setDate(LocalDate.now());
+        catVisit.setDescription("Cat is sneezing with high frequency.");
+
+        visitService.save(catVisit);
+
+        System.out.println("Loaded visits.");
 
         Specialty radiology = new Specialty();
         radiology.setDescription("Radiology");
